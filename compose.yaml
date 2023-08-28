@@ -1,0 +1,5 @@
+services:
+  bundleService:
+    image: bundleService
+    ports:
+      - '8080'

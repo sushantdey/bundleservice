@@ -1,0 +1,20 @@
+type Query {
+    bundleById(id: ID): Bundle
+}
+
+type Bundle {
+    id: ID
+    package_name: String
+    title: String
+    description: String
+    market_url: String
+    rating: Float
+    developer: Developer
+    category: String
+}
+
+type Developer {
+    name: String
+    email: String
+    website: String
+}

@@ -1,2 +1,2 @@
 # bundleservice
-Test repository for demo/sample
+Test/Sample repository for demo

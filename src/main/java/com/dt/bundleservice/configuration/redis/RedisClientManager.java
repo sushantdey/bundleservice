@@ -4,6 +4,7 @@ import com.dt.bundleservice.configuration.ServiceConfigurationManager;
 import com.dt.bundleservice.exception.RedisNodesNotFoundException;
 import io.lettuce.core.resource.ClientResources;
 import io.micrometer.observation.ObservationRegistry;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 import static io.lettuce.core.ReadFrom.REPLICA_PREFERRED;
 
 //@Configuration
+//@Slf4j
 public class RedisClientManager {
 /*
     @Autowired

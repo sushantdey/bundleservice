@@ -3,6 +3,7 @@ package com.dt.bundleservice.configuration;
 import com.dt.bundleservice.dao.ServiceConfigurationRepository;
 import com.dt.bundleservice.entity.ServiceConfiguration;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 @Data
+@Slf4j
 public class ServiceConfigurationManager {
 
     private final Map<String, String> configMap = new ConcurrentHashMap<>();
@@ -27,7 +29,7 @@ public class ServiceConfigurationManager {
     @Autowired
     public ServiceConfigurationManager() {
         tt = new ServiceConfigurationLoader();
-        loadConfigFromDB();
+//        loadConfigFromDB();
         executorService.scheduleAtFixedRate(tt, interval, interval, TimeUnit.MINUTES);
     }
 
@@ -40,10 +42,14 @@ public class ServiceConfigurationManager {
     }
 
     private void loadConfigFromDB() {
+        long startTime = System.currentTimeMillis();
         Iterable<ServiceConfiguration> serviceConfigurations = serviceConfigurationRepository.findAll();
         for (ServiceConfiguration serviceConfiguration :
                 serviceConfigurations) {
             configMap.put(serviceConfiguration.getKey(), serviceConfiguration.getValue());
         }
+        long endTime = System.currentTimeMillis();
+        log.info("[ServiceConfigurationManager] [loadConfigFromDB] : Time taken: {}", (endTime - startTime));
+        log.info("[ServiceConfigurationManager] [loadConfigFromDB] : Configuration Map Size: {}", configMap.size());
     }
 }

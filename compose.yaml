@@ -1,5 +1,7 @@
 services:
-  bundleService:
-    image: bundleService
+  bundle_service:
+    container_name: bundle_service
+    image: dt/bundle_service:latest
     ports:
-      - '8080'
+      - '8080:8080'
+    network_mode: bundle_service_network

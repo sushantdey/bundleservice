@@ -5,3 +5,10 @@ services:
     ports:
       - '8080:8080'
     network_mode: bundle_service_network
+    volumes: 
+      - '/home/sushant/bundleservice/logs:/var/logs'
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: bundle_service
+      MYSQL_PASS: password
+      REDIS_HOST: redis 

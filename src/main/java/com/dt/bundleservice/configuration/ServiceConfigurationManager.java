@@ -2,6 +2,7 @@ package com.dt.bundleservice.configuration;
 
 import com.dt.bundleservice.dao.ServiceConfigurationRepository;
 import com.dt.bundleservice.entity.ServiceConfiguration;
+import io.micrometer.observation.annotation.Observed;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 @Data
 @Slf4j
+@Observed(name = "ServiceConfigurationManager")
 public class ServiceConfigurationManager {
 
     private final Map<String, String> configMap = new ConcurrentHashMap<>();

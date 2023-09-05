@@ -3,6 +3,7 @@ package com.dt.bundleservice.controller;
 import com.dt.bundleservice.entity.Bundle;
 import com.dt.bundleservice.entity.Developer;
 import com.dt.bundleservice.service.BundleService;
+import io.micrometer.observation.annotation.Observed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 @Slf4j
+@Observed(name = "BundleServiceController")
 public class BundleServiceController {
 
     @Autowired

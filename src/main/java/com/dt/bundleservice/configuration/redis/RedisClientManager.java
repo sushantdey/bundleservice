@@ -13,6 +13,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.observability.MicrometerTracingAdapter;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +25,7 @@ import static io.lettuce.core.ReadFrom.REPLICA_PREFERRED;
 //@Slf4j
 public class RedisClientManager {
 /*
+
     @Autowired
     ServiceConfigurationManager serviceConfigurationManager;
 
@@ -36,7 +38,7 @@ public class RedisClientManager {
     }
 
     @Bean
-    public RedisConnectionFactory connectionFactory(ClientResources clientResources) throws RedisNodesNotFoundException {
+    public RedisConnectionFactory connectionFactory(ObservationRegistry observationRegistry) throws RedisNodesNotFoundException {
 
         String bundleServiceRedisNodes = serviceConfigurationManager.getConfigMap() != null
                 ? serviceConfigurationManager.getConfigMap().get("bundle_service_redis_nodes")
@@ -47,10 +49,20 @@ public class RedisClientManager {
                 .map(ip -> ip + ":6379")
                 .collect(Collectors.toList());
         LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
-                .clientResources(clientResources)
+                .clientResources(clientResources(observationRegistry))
                 .readFrom(REPLICA_PREFERRED)
                 .build();
         return new LettuceConnectionFactory(
                 new RedisClusterConfiguration(redisNodesList), clientConfig);
-    }*/
+    }
+
+    @Bean
+    public RedisTemplate<?, ?> redisTemplate(ObservationRegistry observationRegistry) throws RedisNodesNotFoundException {
+        RedisTemplate<?, ?> template = new RedisTemplate<>();
+        template.setConnectionFactory(connectionFactory(observationRegistry));
+        // Add some specific configuration here. Key serializers, etc.
+        return template;
+    }
+*/
+
 }
